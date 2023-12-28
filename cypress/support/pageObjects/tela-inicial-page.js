@@ -15,6 +15,10 @@ class telaInicial {
     cy.get(filtroItem.contador).find("strong").should("have.text", numero);
   }
 
+  validarSizeToDo(numero) {
+    cy.get(concluirItem.validarListaItens).should("have.length", numero);
+  }
+
   concluirItem() {
     cy.get(concluirItem.buttonConcluir).first().click();
   }

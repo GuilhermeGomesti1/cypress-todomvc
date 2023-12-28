@@ -25,9 +25,57 @@ describe("Regressivo ToDo App", () => {
     });
   });
 
-  context.skip("Validar a conclusão itens", () => {});
+  context("Validar a conclusão itens", () => {
+    beforeEach(() => {
+      cy.visit("/");
+      var todoItens = ["maça", "banana", "cenoura"];
 
-  context.skip("Validar o filtro da app", () => {});
+      todoItens.forEach(function (item, indice, array) {
+        telaInicialPage.inputText(item);
+      });
+    });
 
-  context.skip("Validar a remoção de itens", () => {});
+    it("Concluir itens na lista de tuDo", () => {
+      telaInicialPage.concluirItem();
+      telaInicialPage.validarContador(2);
+    });
+  });
+
+  context("Validar o filtro da app", () => {
+    beforeEach(() => {
+      cy.visit("/");
+      var todoItens = ["maça", "banana", "cenoura"];
+
+      todoItens.forEach(function (item, indice, array) {
+        telaInicialPage.inputText(item);
+      });
+      telaInicialPage.concluirItem();
+    });
+
+    it("Validar a lista de itens ativos", () => {
+      telaInicialPage.filtrarItem("Active");
+      telaInicialPage.validarSizeToDo(2);
+    });
+
+    it("Validar a lista de itens concluidos", () => {
+      telaInicialPage.filtrarItem("Completed");
+      telaInicialPage.validarSizeToDo(1);
+    });
+  });
+
+  context("Validar a remoção de itens", () => {
+    beforeEach(() => {
+      cy.visit("/");
+      var todoItens = ["maça", "banana", "cenoura"];
+
+      todoItens.forEach(function (item, indice, array) {
+        telaInicialPage.inputText(item);
+      });
+    });
+
+    it("deletar um item da lista", () => {
+      telaInicialPage.deletarItem();
+      telaInicialPage.validarSizeToDo(2);
+    });
+  });
 });
